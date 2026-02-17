@@ -1,8 +1,11 @@
 using Microsoft.Exchange.WebServices.Data;
 
+using Task = System.Threading.Tasks.Task;
+
 namespace Exchange.WebServices.NETCore.Tests.ComplexProperties;
 
-public class MailboxTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class MailboxTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -13,27 +16,27 @@ public class MailboxTests : IClassFixture<ExchangeProvider>
     }
 
 
-    [Fact]
-    public void EqualityTest()
+    [Test]
+    public async Task EqualityTest()
     {
         var a = new Mailbox("hello@world.com");
         var b = new Mailbox("world@hello.com");
         var c = new Mailbox("hello@world.com");
 
         // ReSharper disable EqualExpressionComparison
-        Assert.True(a == a);
-        Assert.False(a != a);
-        Assert.False(a == null);
-        Assert.False(null == a);
-        Assert.False(a == b);
-        Assert.True(a != b);
+        await Assert.That(a == a).IsTrue();
+        await Assert.That(a != a).IsFalse();
+        await Assert.That(a == null).IsFalse();
+        await Assert.That(null == a).IsFalse();
+        await Assert.That(a == b).IsFalse();
+        await Assert.That(a != b).IsTrue();
 
-        Assert.False(a.Equals(b));
-        Assert.False(a.Equals(null));
-        Assert.True(Equals(a, a));
-        Assert.False(Equals(a, b));
+        await Assert.That(a.Equals(b)).IsFalse();
+        await Assert.That(a.Equals(null)).IsFalse();
+        await Assert.That(Equals(a, a)).IsTrue();
+        await Assert.That(Equals(a, b)).IsFalse();
         // ReSharper restore EqualExpressionComparison
 
-        Assert.True(a == c);
+        await Assert.That(a == c).IsTrue();
     }
 }

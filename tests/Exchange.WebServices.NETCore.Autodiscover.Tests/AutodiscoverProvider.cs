@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
+using Assembly = System.Reflection.Assembly;
+
 namespace Exchange.WebServices.NETCore.Autodiscover.Tests;
 
 [PublicAPI]

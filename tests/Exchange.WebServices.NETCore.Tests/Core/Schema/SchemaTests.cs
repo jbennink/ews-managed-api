@@ -4,7 +4,7 @@ namespace Exchange.WebServices.NETCore.Tests.Core.Schema;
 
 public class SchemaTests
 {
-    [Fact]
+    [Test]
     public void InstantiationTest()
     {
         // Crude check to test for schema instantiation failures.

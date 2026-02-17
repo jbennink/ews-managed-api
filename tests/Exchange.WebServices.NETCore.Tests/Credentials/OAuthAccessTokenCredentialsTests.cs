@@ -37,7 +37,8 @@ internal class TokenProvider : OAuthAccessTokenCredentials
     }
 }
 
-public class OAuthAccessTokenCredentialsTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class OAuthAccessTokenCredentialsTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -46,7 +47,7 @@ public class OAuthAccessTokenCredentialsTests : IClassFixture<ExchangeProvider>
         _provider = provider;
     }
 
-    [Fact]
+    [Test]
     public async Task AuthenticationTest()
     {
         var options = _provider.OutlookConnectionOptions;
@@ -65,6 +66,6 @@ public class OAuthAccessTokenCredentialsTests : IClassFixture<ExchangeProvider>
             new FolderView(100, 0)
         );
 
-        Assert.NotEmpty(folders);
+        await Assert.That(folders).IsNotEmpty();
     }
 }

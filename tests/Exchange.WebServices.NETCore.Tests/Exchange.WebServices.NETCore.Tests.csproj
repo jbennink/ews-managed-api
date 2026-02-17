@@ -19,6 +19,16 @@
 
 	<ItemGroup>
 	  <PackageReference Include="JetBrains.Annotations" />
+
+	  <PackageReference Include="TUnit" />		
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+
+	  <PackageReference Include="Microsoft.Extensions.Configuration" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+
+	  <PackageReference Include="Microsoft.Extensions.Options" />
+	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+
 	  <PackageReference Include="Microsoft.Identity.Client" />
 	  <PackageReference Include="Microsoft.Identity.Web.TokenCache" />
 	</ItemGroup>

@@ -1,12 +1,11 @@
-using System.Diagnostics;
-
 using Microsoft.Exchange.WebServices.Data;
 
 using Task = System.Threading.Tasks.Task;
 
 namespace Exchange.WebServices.NETCore.Tests.Folders;
 
-public class FolderOperationTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class FolderOperationTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -15,7 +14,7 @@ public class FolderOperationTests : IClassFixture<ExchangeProvider>
         _provider = provider;
     }
 
-    [Fact]
+    [Test]
     public async Task FindFoldersTest()
     {
         var service = _provider.CreateTestService();
@@ -25,21 +24,21 @@ public class FolderOperationTests : IClassFixture<ExchangeProvider>
             new FolderView(100, 0)
         );
 
-        Assert.NotEmpty(folders);
+        await Assert.That(folders).IsNotEmpty();
     }
 
 
-    [Fact]
+    [Test]
     public async Task FolderBindTest()
     {
         var service = _provider.CreateTestService();
 
         var folder = await Folder.Bind(service, WellKnownFolderName.ArchiveRoot, PropertySet.FirstClassProperties);
 
-        Assert.NotNull(folder);
+        await Assert.That(folder).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task SyncFolderTest()
     {
         var service = _provider.CreateTestService();
