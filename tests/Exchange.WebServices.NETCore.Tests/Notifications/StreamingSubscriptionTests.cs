@@ -6,7 +6,8 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Exchange.WebServices.NETCore.Tests.Notifications;
 
-public class StreamingSubscriptionTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class StreamingSubscriptionTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -15,7 +16,7 @@ public class StreamingSubscriptionTests : IClassFixture<ExchangeProvider>
         _provider = provider;
     }
 
-    [Fact]
+    [Test]
     public async Task StreamingTest()
     {
         var service = _provider.CreateTestService();
@@ -47,14 +48,14 @@ public class StreamingSubscriptionTests : IClassFixture<ExchangeProvider>
         };
 
         connection.Open();
-        Assert.True(connection.IsOpen);
+        await Assert.That(connection.IsOpen).IsTrue();
 
         await Task.Delay(10_000);
 
         connection.Close();
     }
 
-    [Fact]
+    [Test]
     public async Task StreamingEventsTest()
     {
         var service = _provider.CreateTestService();

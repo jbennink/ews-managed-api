@@ -1,11 +1,11 @@
 using Microsoft.Exchange.WebServices.Data;
 
-using Exception = System.Exception;
 using Task = System.Threading.Tasks.Task;
 
 namespace Exchange.WebServices.NETCore.Tests.Items;
 
-public class ItemOperationTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class ItemOperationTests : ExchangeProvider
 {
     private readonly ExchangeProvider _provider;
 
@@ -14,7 +14,7 @@ public class ItemOperationTests : IClassFixture<ExchangeProvider>
         _provider = provider;
     }
 
-    [Fact]
+    [Test]
     public async Task ItemSearchFilterTest()
     {
         using var service = _provider.CreateTestService();
@@ -29,10 +29,10 @@ public class ItemOperationTests : IClassFixture<ExchangeProvider>
         var view = new ItemView(1);
 
         var items = await service.FindItems(WellKnownFolderName.Inbox, filter, view);
-        Assert.NotEmpty(items);
+        await Assert.That(items).IsNotEmpty();
     }
 
-    [Fact]
+    [Test]
     public async Task ItemSuccessionTest()
     {
         using var service = _provider.CreateTestService();
@@ -47,7 +47,7 @@ public class ItemOperationTests : IClassFixture<ExchangeProvider>
         var view = new ItemView(1);
 
         var items = await service.FindItems(WellKnownFolderName.Inbox, filter, view);
-        Assert.NotEmpty(items);
+        await Assert.That(items).IsNotEmpty();
 
         foreach (var item in items)
         {
@@ -57,7 +57,7 @@ public class ItemOperationTests : IClassFixture<ExchangeProvider>
         }
     }
 
-    [Fact]
+    [Test]
     public async Task FindItems_Cancelled_ThrowsOperationCancelledException()
     {
         using var service = _provider.CreateTestService();

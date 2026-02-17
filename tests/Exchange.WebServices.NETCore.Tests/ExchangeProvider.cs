@@ -1,19 +1,16 @@
 // #define TRACING
 
-using System.Reflection;
-
-using Exchange.WebServices.NETCore.Tests.Utility;
-
 using JetBrains.Annotations;
 
 using Microsoft.Exchange.WebServices.Data;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web.TokenCacheProviders;
 using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
+
+using Assembly = System.Reflection.Assembly;
 
 namespace Exchange.WebServices.NETCore.Tests;
 
