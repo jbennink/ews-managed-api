@@ -1,4 +1,10 @@
+using System.Diagnostics;
+
+using Exchange.WebServices.NETCore.Tests.Credentials;
+using Exchange.WebServices.NETCore.Tests.Utility;
+
 using Microsoft.Exchange.WebServices.Data;
+using Microsoft.Identity.Web.TokenCacheProviders;
 
 using Task = System.Threading.Tasks.Task;
 
@@ -82,5 +88,28 @@ public class ItemOperationTests : ExchangeProvider
         {
             // Do nothing
         }
+    }
+
+    [Test]
+    public async Task FindItems_Contact_Works()
+    {
+        var options = _provider.OutlookConnectionOptions;
+
+        var service = new ExchangeService
+        {
+            Credentials = new TokenProvider(options, _provider.GetRequiredService<IMsalTokenCacheProvider>()),
+            UseDefaultCredentials = false,
+            AcceptGzipEncoding = true,
+            Url = new Uri(options.Url),
+            ImpersonatedUserId = new ImpersonatedUserId(ConnectingIdType.PrincipalName, options.ImpersonationUpn),
+            TraceEnabled = true,
+            TraceListener = new EwsTraceListener(),
+        };
+
+        var view = new ItemView(100);
+
+        var result = await service.FindItems(WellKnownFolderName.Contacts, view);
+
+        Debugger.Break();
     }
 }
