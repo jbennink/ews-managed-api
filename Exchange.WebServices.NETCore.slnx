@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <Project Path="src/Exchange.WebServices.NETCore.Autodiscover/Exchange.WebServices.NETCore.Autodiscover.csproj" />
+    <Project Path="src/Exchange.WebServices.NETCore/Exchange.WebServices.NETCore.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/Directory.Build.props" />
+    <Project Path="tests/Exchange.WebServices.NETCore.Autodiscover.Tests/Exchange.WebServices.NETCore.Autodiscover.Tests.csproj" />
+    <Project Path="tests/Exchange.WebServices.NETCore.Tests/Exchange.WebServices.NETCore.Tests.csproj" />
+  </Folder>
+</Solution>

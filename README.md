@@ -2,7 +2,7 @@
 
 [![NuGet Version](https://img.shields.io/nuget/v/Exchange.WebServices.NETCore)](https://www.nuget.org/packages/Exchange.WebServices.NETCore)
 
-This is a .NET Core 8 fork of [sherlock1982's](https://www.nuget.org/packages/Microsoft.Exchange.WebServices.NETStandard) fork with
+This is a .NET Core 10 fork of [sherlock1982's](https://www.nuget.org/packages/Microsoft.Exchange.WebServices.NETStandard) fork with
 multiple additions and fixes:
 
 - Autodiscovery features where moved into a seperate package [Exchange.WebServices.NETCore.Autodiscover](https://www.nuget.org/packages/Exchange.WebServices.NETCore.Autodiscover/)

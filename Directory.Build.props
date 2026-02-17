@@ -6,14 +6,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MinVer" Version="6.0.0">
+		<PackageReference Include="MinVer">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
 
-		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
+		<PackageReference Include="DotNet.ReproducibleBuilds">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
