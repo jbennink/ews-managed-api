@@ -4,7 +4,8 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Exchange.WebServices.NETCore.Tests.Folders;
 
-public class FolderBindCancellationTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class FolderBindCancellationTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -14,7 +15,7 @@ public class FolderBindCancellationTests : IClassFixture<ExchangeProvider>
     }
 
 
-    [Fact]
+    [Test]
     public async Task BindFolder_Cancellation_ThrowsOperationCancelledException()
     {
         using var service = _provider.CreateTestService();

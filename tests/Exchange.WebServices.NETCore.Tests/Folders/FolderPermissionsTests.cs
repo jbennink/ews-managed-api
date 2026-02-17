@@ -1,6 +1,7 @@
 namespace Exchange.WebServices.NETCore.Tests.Folders;
 
-public class FolderPermissionsTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class FolderPermissionsTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -9,11 +10,9 @@ public class FolderPermissionsTests : IClassFixture<ExchangeProvider>
         _provider = provider;
     }
 
-    [Fact]
+    [Test]
     public async Task GetFolderPermissions()
     {
         var service = _provider.CreateTestService();
-
-        
     }
 }

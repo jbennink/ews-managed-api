@@ -4,7 +4,8 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Exchange.WebServices.NETCore.Tests.ComplexProperties;
 
-public class FolderIdTests : IClassFixture<ExchangeProvider>
+[ClassDataSource<ExchangeProvider>(Shared = SharedType.PerClass)]
+public class FolderIdTests
 {
     private readonly ExchangeProvider _provider;
 
@@ -15,26 +16,26 @@ public class FolderIdTests : IClassFixture<ExchangeProvider>
     }
 
 
-    [Fact]
-    public void EqualityTests()
+    [Test]
+    public async Task EqualityTests()
     {
         var a = new FolderId(WellKnownFolderName.AdminAuditLogs, new Mailbox());
         var b = new FolderId(WellKnownFolderName.ArchiveInbox, new Mailbox());
 
-        Assert.False(a.Equals(b));
-        Assert.False(a == b);
+        await Assert.That(a.Equals(b)).IsFalse();
+        await Assert.That(a == b).IsFalse();
     }
 
-    [Fact]
-    public void BrokenEquality()
+    [Test]
+    public async Task BrokenEquality()
     {
         var a = new FolderId(WellKnownFolderName.AdminAuditLogs);
         var b = new FolderId(WellKnownFolderName.ArchiveInbox);
 
-        Assert.False(a.Equals(b));
+        await Assert.That(a.Equals(b)).IsFalse();
     }
 
-    [Fact]
+    [Test]
     public async Task EqualityTest()
     {
         var service = _provider.CreateTestService();
@@ -44,7 +45,7 @@ public class FolderIdTests : IClassFixture<ExchangeProvider>
             new FolderView(100, 0)
         )).ToList();
 
-        Assert.True(folders.Count > 2);
+        await Assert.That(folders.Count > 2).IsTrue();
 
         var a = folders[0].Id;
         var b = folders[1].Id;
@@ -56,28 +57,28 @@ public class FolderIdTests : IClassFixture<ExchangeProvider>
         var c = new FolderId(a.UniqueId);
 
         // ReSharper disable EqualExpressionComparison
-        Assert.True(a == a);
-        Assert.True(a.Equals(a));
-        Assert.False(a == null);
-        Assert.False(null == a);
+        await Assert.That(a == a).IsTrue();
+        await Assert.That(a.Equals(a)).IsTrue();
+        await Assert.That(a == null).IsFalse();
+        await Assert.That(null == a).IsFalse();
 
-        Assert.False(a.Equals(b));
-        Assert.False(a == b);
+        await Assert.That(a.Equals(b)).IsFalse();
+        await Assert.That(a == b).IsFalse();
         // ReSharper restore EqualExpressionComparison
 
-        Assert.True(a == c);
+        await Assert.That(a == c).IsTrue();
     }
 
-    [Fact]
-    public void MailboxFolderIdEqualityTest()
+    [Test]
+    public async Task MailboxFolderIdEqualityTest()
     {
         var a = new FolderId(WellKnownFolderName.ArchiveInbox, new Mailbox("hello@world.com"));
         var b = new FolderId(WellKnownFolderName.AdminAuditLogs, new Mailbox("world@hello.com"));
         var c = new FolderId(WellKnownFolderName.ArchiveInbox, new Mailbox("hello@world.com"));
 
-        Assert.True(a.Equals(a));
-        Assert.False(a == b);
+        await Assert.That(a.Equals(a)).IsTrue();
+        await Assert.That(a == b).IsFalse();
 
-        Assert.True(a == c);
+        await Assert.That(a == c).IsTrue();
     }
 }

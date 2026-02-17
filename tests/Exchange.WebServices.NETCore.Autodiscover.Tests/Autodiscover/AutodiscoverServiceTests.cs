@@ -7,7 +7,8 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Exchange.WebServices.NETCore.Autodiscover.Tests.Autodiscover;
 
-public class AutodiscoverServiceTests : IClassFixture<AutodiscoverProvider>
+[ClassDataSource<AutodiscoverProvider>(Shared = SharedType.PerClass)]
+public class AutodiscoverServiceTests
 {
     private readonly AutodiscoverProvider _provider;
 
@@ -16,7 +17,7 @@ public class AutodiscoverServiceTests : IClassFixture<AutodiscoverProvider>
         _provider = provider;
     }
 
-    [Fact]
+    [Test]
     public async Task DiscoveryTest()
     {
         var options = _provider.ConnectionOptions.Value;
@@ -36,7 +37,7 @@ public class AutodiscoverServiceTests : IClassFixture<AutodiscoverProvider>
         Debugger.Break();
     }
 
-    [Fact]
+    [Test]
     public async Task DomainTest()
     {
         var options = _provider.ConnectionOptions.Value;
@@ -55,7 +56,7 @@ public class AutodiscoverServiceTests : IClassFixture<AutodiscoverProvider>
         Debugger.Break();
     }
 
-    [Fact]
+    [Test]
     public async Task LegacyDiscoveryTest()
     {
         var options = _provider.ConnectionOptions.Value;
@@ -68,7 +69,7 @@ public class AutodiscoverServiceTests : IClassFixture<AutodiscoverProvider>
         await service.AutodiscoverUrl(options.UserName, _ => true);
     }
 
-    [Fact]
+    [Test]
     public async Task AutoDiscovery_SetTimeout_NoException()
     {
         var options = _provider.ConnectionOptions.Value;
