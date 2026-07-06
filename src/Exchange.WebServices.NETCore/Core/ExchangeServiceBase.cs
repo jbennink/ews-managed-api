@@ -29,6 +29,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Runtime.InteropServices;
+using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml;
@@ -59,11 +60,6 @@ public abstract class ExchangeServiceBase : IDisposable
     private static readonly object LockObj = new();
 
     /// <summary>
-    ///     The binary secret.
-    /// </summary>
-    private static byte[]? _binarySecret;
-
-    /// <summary>
     ///     Underlying HttpWebRequest.
     /// </summary>
     private readonly HttpClient _httpClient;
@@ -75,7 +71,6 @@ public abstract class ExchangeServiceBase : IDisposable
 
 
     private ExchangeCredentials? _credentials;
-    private TimeZoneDefinition? _timeZoneDefinition;
 
     private bool _traceEnabled;
     private ITraceListener? _traceListener = new EwsTraceListener();
@@ -100,7 +95,7 @@ public abstract class ExchangeServiceBase : IDisposable
     /// <summary>
     ///     Gets a time zone definition generated from the time zone info to which this service is scoped.
     /// </summary>
-    public TimeZoneDefinition TimeZoneDefinition => _timeZoneDefinition ??= new TimeZoneDefinition(TimeZone);
+    public TimeZoneDefinition TimeZoneDefinition => field ??= new TimeZoneDefinition(TimeZone);
 
     /// <summary>
     ///     Gets or sets a value indicating whether client latency info is push to server.
@@ -327,6 +322,12 @@ public abstract class ExchangeServiceBase : IDisposable
         set => _httpClientHandler.ServerCertificateCustomValidationCallback = value;
     }
 
+    public SslProtocols SslProtocols
+    {
+        get => _httpClientHandler.SslProtocols;
+        set { _httpClientHandler.SslProtocols = value; }
+    }
+
     /// <summary>
     ///     Gets or sets a value that indicates whether the request should follow redirection responses.
     /// </summary>
@@ -351,14 +352,14 @@ public abstract class ExchangeServiceBase : IDisposable
             // this has to be computed only once.
             lock (LockObj)
             {
-                if (_binarySecret == null)
+                if (field == null)
                 {
                     var randomNumberGenerator = RandomNumberGenerator.Create();
-                    _binarySecret = new byte[256 / 8];
-                    randomNumberGenerator.GetBytes(_binarySecret);
+                    field = new byte[256 / 8];
+                    randomNumberGenerator.GetBytes(field);
                 }
 
-                return _binarySecret;
+                return field;
             }
         }
     }
